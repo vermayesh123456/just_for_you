@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>For Vaidehi 🌸</title>
+<title>For Vaidehi 🐤</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Quicksand:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 <style>
   *{margin:0;padding:0;box-sizing:border-box;}
@@ -51,7 +51,181 @@
   /* CANVAS */
   #canvas{ position:fixed; inset:0; z-index:1; pointer-events:none; }
 
-  /* MUSIC BTN */
+  /* ===================== LOCK SCREEN ===================== */
+  #lock-screen{
+    position:fixed; inset:0; z-index:100;
+    display:flex; align-items:center; justify-content:center;
+    background:rgba(14,5,1,0.94);
+    backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
+    transition:opacity 0.9s ease, visibility 0.9s ease;
+  }
+  #lock-screen.unlocking{
+    opacity:0; pointer-events:none;
+  }
+
+  .lock-box{
+    background:rgba(255,240,228,0.10);
+    border:1.5px solid rgba(220,180,150,0.38);
+    border-radius:36px;
+    padding:44px 32px 38px;
+    max-width:320px; width:90%;
+    text-align:center;
+    box-shadow:0 20px 70px rgba(28,15,7,0.75), 0 2px 0 rgba(220,180,140,0.35) inset;
+    position:relative; overflow:hidden;
+    animation:lockPop 0.75s cubic-bezier(0.34,1.56,0.64,1) both;
+  }
+  @keyframes lockPop{
+    from{opacity:0;transform:scale(0.75) translateY(40px);}
+    to{opacity:1;transform:scale(1) translateY(0);}
+  }
+  .lock-box::before{
+    content:''; position:absolute; top:0; left:0; right:0; height:1.5px;
+    background:linear-gradient(90deg,transparent,rgba(220,170,120,0.9),transparent);
+  }
+
+  /* big bouncing chick */
+  .lock-chick{
+    font-size:72px; line-height:1;
+    display:block; margin-bottom:10px;
+    animation:chickBounce 2.2s ease-in-out infinite;
+    filter:drop-shadow(0 6px 20px rgba(193,123,82,0.55));
+  }
+  @keyframes chickBounce{
+    0%,100%{transform:translateY(0) rotate(-6deg) scale(1);}
+    35%{transform:translateY(-14px) rotate(6deg) scale(1.12);}
+    65%{transform:translateY(-7px) rotate(0deg) scale(1.06);}
+  }
+
+  .lock-title{
+    font-family:'Cormorant Garamond',serif; font-style:italic;
+    font-size:26px; font-weight:300;
+    color:var(--warm-white); margin-bottom:6px;
+    line-height:1.3;
+    text-shadow:0 2px 16px rgba(28,15,7,0.6);
+  }
+  .lock-hint{
+    font-size:11px; color:var(--blush); opacity:0.75;
+    letter-spacing:1.8px; margin-bottom:26px;
+    text-transform:uppercase;
+  }
+
+  /* chick row above input */
+  .chick-row{
+    display:flex; justify-content:center; gap:8px;
+    margin-bottom:12px; font-size:20px;
+  }
+  .chick-row span{
+    display:inline-block;
+    animation:chickRow 1.8s ease-in-out infinite;
+    animation-delay:calc(var(--i)*0.18s);
+  }
+  @keyframes chickRow{
+    0%,100%{transform:translateY(0);}
+    40%{transform:translateY(-6px);}
+  }
+
+  .lock-input-wrap{
+    position:relative; margin-bottom:18px;
+  }
+  .lock-side-chick{
+    position:absolute; top:50%; transform:translateY(-50%);
+    font-size:20px; pointer-events:none;
+    transition:transform 0.3s;
+  }
+  .lock-side-chick.left{ left:12px; }
+  .lock-side-chick.right{ right:12px; }
+  .lock-input-wrap:focus-within .lock-side-chick.left{
+    transform:translateY(-50%) rotate(-20deg) scale(1.25);
+  }
+  .lock-input-wrap:focus-within .lock-side-chick.right{
+    transform:translateY(-50%) rotate(20deg) scale(1.25);
+  }
+
+  #password-input{
+    width:100%; padding:14px 44px;
+    background:rgba(90,45,15,0.38);
+    border:1.5px solid rgba(220,160,110,0.38);
+    border-radius:50px; outline:none;
+    font-family:'Quicksand',sans-serif;
+    font-size:16px; font-weight:600;
+    color:var(--warm-white); text-align:center;
+    letter-spacing:2px;
+    transition:border-color 0.3s, box-shadow 0.3s, background 0.3s;
+  }
+  #password-input::placeholder{
+    color:rgba(242,206,186,0.4);
+    letter-spacing:1px; font-size:13px; font-weight:400;
+  }
+  #password-input:focus{
+    border-color:rgba(220,160,110,0.75);
+    background:rgba(90,45,15,0.55);
+    box-shadow:0 0 0 4px rgba(193,123,82,0.2), 0 4px 20px rgba(28,15,7,0.3);
+  }
+  #password-input.shake{
+    animation:shake 0.45s ease;
+    border-color:rgba(220,80,60,0.7);
+    box-shadow:0 0 0 4px rgba(220,80,60,0.15);
+  }
+  @keyframes shake{
+    0%,100%{transform:translateX(0);}
+    20%{transform:translateX(-9px);}
+    40%{transform:translateX(9px);}
+    60%{transform:translateX(-5px);}
+    80%{transform:translateX(5px);}
+  }
+
+  .lock-btn{
+    width:100%; padding:14px;
+    background:linear-gradient(135deg,var(--clay),var(--terracotta));
+    border:none; border-radius:50px; cursor:pointer;
+    font-family:'Quicksand',sans-serif; font-size:13px;
+    font-weight:700; letter-spacing:2.5px; text-transform:uppercase;
+    color:var(--warm-white);
+    box-shadow:0 8px 28px rgba(193,123,82,0.45), 0 2px 0 rgba(255,200,160,0.3) inset;
+    transition:transform 0.2s, box-shadow 0.2s;
+    display:flex; align-items:center; justify-content:center; gap:10px;
+  }
+  .lock-btn:hover{ transform:scale(1.04); box-shadow:0 12px 36px rgba(193,123,82,0.6); }
+  .lock-btn:active{ transform:scale(0.97); }
+
+  .wrong-msg{
+    margin-top:14px; font-size:12.5px;
+    color:rgba(255,160,110,0.95); opacity:0;
+    transition:opacity 0.3s; letter-spacing:0.5px;
+    font-style:italic;
+  }
+  .wrong-msg.show{ opacity:1; }
+
+  /* progress dots */
+  .lock-dots{
+    display:flex; gap:7px; justify-content:center; margin-top:20px;
+  }
+  .lock-dot{
+    width:7px; height:7px; border-radius:50%;
+    background:rgba(220,160,110,0.25);
+    transition:background 0.2s, transform 0.2s;
+    font-size:0;
+  }
+  .lock-dot.filled{
+    background:var(--clay-light);
+    transform:scale(1.3);
+  }
+
+  /* unlock burst */
+  .unlock-burst{
+    position:fixed; inset:0;
+    display:flex; align-items:center; justify-content:center;
+    font-size:40px; letter-spacing:8px;
+    pointer-events:none; opacity:0; z-index:200;
+  }
+  .unlock-burst.go{ animation:bigBurst 0.8s ease forwards; }
+  @keyframes bigBurst{
+    0%{opacity:0;transform:scale(0.4);}
+    55%{opacity:1;transform:scale(1.5);}
+    100%{opacity:0;transform:scale(3);}
+  }
+
+  /* ===================== MUSIC BTN ===================== */
   #music-btn{
     position:fixed; bottom:22px; right:18px; z-index:10;
     width:54px; height:54px; border-radius:50%;
@@ -63,7 +237,7 @@
     flex-direction:column; gap:2px; transition:transform 0.2s, background 0.2s;
   }
   #music-btn:hover{ transform:scale(1.1); background:rgba(120,60,20,0.65); }
-  #music-btn .note{ font-size:22px; animation:bob 3s ease-in-out infinite; display:block; line-height:1; }
+  #music-btn .note{ font-size:24px; animation:bob 3s ease-in-out infinite; display:block; line-height:1; }
   #music-btn .mute-label{ font-size:8px; color:var(--blush); letter-spacing:0.5px; font-weight:600; }
   @keyframes bob{ 0%,100%{transform:scale(1) rotate(-5deg);} 50%{transform:scale(1.15) rotate(5deg);} }
   #music-btn.playing::after{
@@ -73,7 +247,7 @@
   }
   @keyframes ring{ 0%{transform:scale(1);opacity:0.7;} 100%{transform:scale(1.5);opacity:0;} }
 
-  /* CONTENT */
+  /* ===================== CONTENT ===================== */
   .content{
     position:relative; z-index:2;
     max-width:440px; margin:0 auto;
@@ -81,7 +255,6 @@
     display:flex; flex-direction:column; gap:18px;
   }
 
-  /* GLASS */
   .glass{
     background:var(--glass-bg);
     backdrop-filter:blur(24px); -webkit-backdrop-filter:blur(24px);
@@ -97,7 +270,6 @@
     background:linear-gradient(90deg,transparent,rgba(220,170,120,0.7),transparent);
   }
 
-  /* HERO */
   .hero{ text-align:center; }
   .eyebrow{
     font-size:10px; letter-spacing:4px; text-transform:uppercase;
@@ -117,7 +289,6 @@
   }
   @keyframes breathe{ 0%,100%{transform:scale(1);} 50%{transform:scale(1.025);} }
 
-  /* PHOTOS */
   .pic-strip{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
   .pic-frame{
     height:190px; border-radius:22px; overflow:hidden;
@@ -134,7 +305,6 @@
     padding:20px 6px 10px;
   }
 
-  /* SECTIONS */
   .section-title{
     font-family:'Cormorant Garamond',serif; font-style:italic;
     font-size:26px; font-weight:400;
@@ -150,14 +320,12 @@
     font-size:20px; color:var(--blush); text-align:right; margin-top:18px;
   }
 
-  /* DIVIDER */
   .divider{
     height:1.5px; margin:14px 0;
     background:linear-gradient(90deg,transparent,var(--clay),var(--clay-light),var(--clay),transparent);
     opacity:0.5; border-radius:2px;
   }
 
-  /* PROMISES */
   .promises{ display:flex; flex-direction:column; gap:12px; }
   .promise-item{
     display:flex; align-items:flex-start; gap:12px;
@@ -167,9 +335,8 @@
     font-size:13.5px; color:rgba(255,245,235,0.88);
     line-height:1.7;
   }
-  .promise-icon{ font-size:18px; margin-top:1px; flex-shrink:0; }
+  .promise-icon{ font-size:20px; margin-top:1px; flex-shrink:0; }
 
-  /* QUOTE */
   .quote-wrap{ text-align:center; }
   .quote-wrap blockquote{
     font-family:'Cormorant Garamond',serif; font-style:italic;
@@ -183,7 +350,6 @@
     font-style:normal; text-transform:uppercase; opacity:0.8;
   }
 
-  /* VISION */
   .vision{
     text-align:center;
     font-family:'Cormorant Garamond',serif; font-style:italic;
@@ -192,7 +358,6 @@
   }
   .vision em{ font-style:normal; color:var(--clay-light); }
 
-  /* FOOTER */
   .footer{ text-align:center; }
   .footer p{
     font-family:'Cormorant Garamond',serif; font-style:italic;
@@ -201,7 +366,6 @@
   }
   .footer .tiny{ font-size:11px; color:var(--blush); margin-top:8px; opacity:0.75; letter-spacing:0.8px; }
 
-  /* FADE IN */
   @keyframes fadeUp{ from{opacity:0;transform:translateY(22px);} to{opacity:1;transform:translateY(0);} }
   .content > *{ animation:fadeUp 0.75s ease both; }
   .content > *:nth-child(1){ animation-delay:0.05s; }
@@ -224,8 +388,60 @@
 
 <canvas id="canvas"></canvas>
 
+<!-- =================== LOCK SCREEN =================== -->
+<div id="lock-screen">
+  <div class="lock-box">
+    <span class="lock-chick">🐤</span>
+
+    <div class="lock-title">psst… this page is<br>only for someone special 🐤</div>
+    <div class="lock-hint">🐤 type the magic word 🐤</div>
+
+    <div class="chick-row">
+      <span style="--i:0">🐤</span>
+      <span style="--i:1">🐤</span>
+      <span style="--i:2">🐤</span>
+      <span style="--i:3">🐤</span>
+      <span style="--i:4">🐤</span>
+    </div>
+
+    <div class="lock-input-wrap">
+      <span class="lock-side-chick left">🐤</span>
+      <input
+        id="password-input"
+        type="text"
+        placeholder="who are you? 🐤"
+        autocomplete="off"
+        autocorrect="off"
+        autocapitalize="off"
+        spellcheck="false"
+      />
+      <span class="lock-side-chick right">🐤</span>
+    </div>
+
+    <button class="lock-btn" onclick="tryUnlock()">
+      🐤 &nbsp; enter &nbsp; 🐤
+    </button>
+
+    <div class="wrong-msg" id="wrong-msg">🐤 hmm… that doesn't sound right 🐤</div>
+
+    <div class="lock-dots" id="lock-dots">
+      <div class="lock-dot" id="d0"></div>
+      <div class="lock-dot" id="d1"></div>
+      <div class="lock-dot" id="d2"></div>
+      <div class="lock-dot" id="d3"></div>
+      <div class="lock-dot" id="d4"></div>
+      <div class="lock-dot" id="d5"></div>
+      <div class="lock-dot" id="d6"></div>
+    </div>
+  </div>
+</div>
+
+<!-- unlock burst overlay -->
+<div class="unlock-burst" id="burst">🐤 🐤 🐤 🐤 🐤</div>
+
+<!-- =================== MUSIC BTN =================== -->
 <div id="music-btn" title="Toggle music">
-  <span class="note">🎵</span>
+  <span class="note">🐤</span>
   <span class="mute-label" id="mute-label">PLAYING</span>
 </div>
 
@@ -233,68 +449,69 @@
   <source src="song.mp3" type="audio/mpeg"/>
 </audio>
 
+<!-- =================== MAIN CONTENT =================== -->
 <div class="content">
 
   <!-- Hero -->
   <div class="glass hero">
-    <div class="eyebrow">✦ for vaidehi, with everything ✦</div>
-    <h1>There's something<br>I need to say 🌸</h1>
-    <div class="sub">no pressure, no rush — just honest feelings</div>
+    <div class="eyebrow">🐤 for vaidehi, with everything 🐤</div>
+    <h1>There's something<br>I need to say 🐤</h1>
+    <div class="sub">no pressure, no rush — just honest feelings 🐤</div>
   </div>
 
   <!-- Photos -->
   <div class="pic-strip">
     <div class="pic-frame">
       <img src="a.jpg" alt="Vaidehi"/>
-      <div class="pic-label">effortlessly her 🌸</div>
+      <div class="pic-label">effortlessly her 🐤</div>
     </div>
     <div class="pic-frame">
       <img src="b.jpg" alt="Vaidehi"/>
-      <div class="pic-label">she doesn't even try 🍂</div>
+      <div class="pic-label">she doesn't even try 🐤</div>
     </div>
   </div>
 
   <!-- Main message -->
   <div class="glass">
-    <div class="section-title">Vaidu 🌿</div>
+    <div class="section-title">Vaidu 🐤</div>
     <div class="divider"></div>
     <br/>
     <div class="msg-body">
-      I've been sitting with this for a while now, and I think time doesn't wait for anyone — so here it is 🌸<br><br>
+      I've been sitting with this for a while now, and I think time doesn't wait for anyone — so here it is 🐤<br><br>
       When I think of you, it's never just <em>"wow she's beautiful"</em> — though you absolutely are. It's your nature that gets me. The way you care. The way you are as a whole person. That's what stays with me.<br><br>
       I'm not proposing to you. I'm not asking for anything right now. I just don't want us to miss each other because neither of us said anything. <em>That thought scares me more.</em><br><br>
-      I think we could be really good together, Vaidu. I genuinely do. You deserve someone who can give you everything — and I don't know if I'm fully that person yet, but I know I'd try harder for you than I ever have for anything 🍂<br><br>
-      I love and respect both our spaces. I won't crowd yours. But I also can't keep pretending I don't feel this 🌸
+      I think we could be really good together, Vaidu. I genuinely do. You deserve someone who can give you everything — and I don't know if I'm fully that person yet, but I know I'd try harder for you than I ever have for anything 🐤<br><br>
+      I love and respect both our spaces. I won't crowd yours. But I also can't keep pretending I don't feel this 🐤
     </div>
-    <div class="msg-sign">— Yash 🌿</div>
+    <div class="msg-sign">— Yash 🐤</div>
   </div>
 
   <!-- Quote -->
   <div class="glass quote-wrap">
-    <blockquote>"I don't want to rush you —<br>I just don't want to lose the chance<br>to even try." 🌸</blockquote>
-    <cite>something yash has been holding onto</cite>
+    <blockquote>🐤 "I don't want to rush you —<br>I just don't want to lose the chance<br>to even try." 🐤</blockquote>
+    <cite>🐤 something yash has been holding onto 🐤</cite>
   </div>
 
-  <!-- Promises / what he sees -->
+  <!-- Promises -->
   <div class="glass">
-    <div class="section-title">what I know about us 🍂</div>
+    <div class="section-title">what I know about us 🐤</div>
     <div class="divider"></div>
     <br/>
     <div class="promises">
       <div class="promise-item">
-        <span class="promise-icon">🌿</span>
+        <span class="promise-icon">🐤</span>
         <span>You can be completely yourself — <em>childish, messy, loud, quiet</em> — and I'd just smile. I already know how to handle everything you think might be "too much."</span>
       </div>
       <div class="promise-item">
-        <span class="promise-icon">🌸</span>
+        <span class="promise-icon">🐤</span>
         <span>I give space as easily as I give attention. Not checking in every hour doesn't mean not caring. I understand that version of love.</span>
       </div>
       <div class="promise-item">
-        <span class="promise-icon">🍂</span>
+        <span class="promise-icon">🐤</span>
         <span>I can cook — healthy, vegetarian, actually tasty. I give good massages. I know how to take extra care on difficult days 🥺</span>
       </div>
       <div class="promise-item">
-        <span class="promise-icon">🌿</span>
+        <span class="promise-icon">🐤</span>
         <span>There's a lot of romance in me that I've been saving for the right person. <em>I think that might be you.</em> And I'm a little shy saying that honestly 🙈</span>
       </div>
     </div>
@@ -303,22 +520,64 @@
   <!-- Vision -->
   <div class="glass">
     <div class="vision">
-      The image I keep coming back to —<br><br>
+      🐤 The image I keep coming back to —<br><br>
       <em>Both of us, somewhere quiet,<br>under some shade, holding hands,<br>having this exact conversation.</em><br><br>
-      No pressure. No timeline. Just us, finally talking 🌸
+      No pressure. No timeline. Just us, finally talking 🐤
     </div>
   </div>
 
   <!-- Footer -->
   <div class="footer">
-    <p>do you feel it too, Vaidu? 🌿</p>
-    <div class="tiny">no rush · no pressure · just yash, being honest for once</div>
+    <p>🐤 do you feel it too, Vaidu? 🐤</p>
+    <div class="tiny">🐤 no rush · no pressure · just yash, being honest for once 🐤</div>
   </div>
 
 </div>
 
 <script>
-/* MUSIC */
+/* =============== LOCK SCREEN =============== */
+const PASSWORD = 'vaidehi';
+const input    = document.getElementById('password-input');
+const wrongMsg = document.getElementById('wrong-msg');
+const lockSc   = document.getElementById('lock-screen');
+const burst    = document.getElementById('burst');
+
+// fill dots as user types
+input.addEventListener('input', () => {
+  const len = Math.min(input.value.length, 7);
+  for(let i = 0; i < 7; i++){
+    document.getElementById('d'+i).classList.toggle('filled', i < len);
+  }
+  wrongMsg.classList.remove('show');
+  input.classList.remove('shake');
+});
+
+input.addEventListener('keydown', (e) => {
+  if(e.key === 'Enter') tryUnlock();
+});
+
+function tryUnlock(){
+  const val = input.value.trim().toLowerCase();
+  if(val === PASSWORD){
+    burst.classList.add('go');
+    setTimeout(()=>{
+      lockSc.classList.add('unlocking');
+      lockSc.addEventListener('transitionend', ()=>{
+        lockSc.style.display = 'none';
+      }, {once:true});
+      tryPlay();
+    }, 600);
+  } else {
+    input.classList.remove('shake');
+    void input.offsetWidth;
+    input.classList.add('shake');
+    wrongMsg.classList.add('show');
+    input.value = '';
+    for(let i = 0; i < 7; i++) document.getElementById('d'+i).classList.remove('filled');
+  }
+}
+
+/* =============== MUSIC =============== */
 const audio = document.getElementById('bg-music');
 const btn   = document.getElementById('music-btn');
 const label = document.getElementById('mute-label');
@@ -328,12 +587,11 @@ audio.volume = 0.45;
 
 function tryPlay(){
   audio.play().then(()=>{
-    playing=true; btn.classList.add('playing'); label.textContent='PLAYING';
+    playing = true; btn.classList.add('playing'); label.textContent = 'PLAYING';
   }).catch(()=>{
-    playing=false; btn.classList.remove('playing'); label.textContent='TAP ▶';
+    playing = false; btn.classList.remove('playing'); label.textContent = 'TAP ▶';
   });
 }
-tryPlay();
 
 document.addEventListener('click', function startOnFirst(){
   if(!playing) tryPlay();
@@ -346,53 +604,74 @@ btn.addEventListener('click', (e)=>{
   else tryPlay();
 });
 
-/* CANVAS — floating petals & stars */
+/* =============== CANVAS — floating 🐤 chicks =============== */
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
-let W, H, items=[];
+let W, H, items = [];
 
-function resize(){ W=canvas.width=window.innerWidth; H=canvas.height=window.innerHeight; }
+function resize(){ W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
 resize(); window.addEventListener('resize', resize);
-function rand(a,b){ return a+Math.random()*(b-a); }
+function rand(a,b){ return a + Math.random()*(b-a); }
 
-const petalColors = ['#C17B52','#E8A87C','#F2CEBA','#C96A3A','#8B5230','#D4956A'];
-
-function drawPetal(ctx,x,y,size,color,alpha,rot){
-  ctx.save(); ctx.globalAlpha=alpha; ctx.translate(x,y); ctx.rotate(rot);
-  ctx.beginPath();
-  ctx.ellipse(0,0,size*0.38,size,0,0,Math.PI*2);
-  ctx.fillStyle=color; ctx.fill(); ctx.restore();
-}
-
-function drawStar(ctx,x,y,size,alpha){
-  ctx.save(); ctx.globalAlpha=alpha; ctx.translate(x,y);
-  ctx.beginPath(); ctx.arc(0,0,size,0,Math.PI*2);
-  ctx.fillStyle='#FDF6EE'; ctx.fill(); ctx.restore();
-}
+// pre-render chick at different sizes for performance
+const chickSizes = [12, 16, 20, 26, 34];
+const chickCanvases = chickSizes.map(s => {
+  const oc = document.createElement('canvas');
+  oc.width = oc.height = Math.ceil(s * 2.2);
+  const ox = oc.getContext('2d');
+  ox.font = s + 'px serif';
+  ox.textAlign = 'center'; ox.textBaseline = 'middle';
+  ox.fillText('🐤', oc.width/2, oc.height/2);
+  return oc;
+});
 
 function spawnItem(){
-  const type=Math.random()<0.65?'petal':'star';
-  return{
-    type, size:type==='petal'?rand(5,15):rand(1,2.5),
-    x:rand(0,W), y:-30-Math.random()*H*0.4,
-    speed:rand(0.8,2.2),
-    wobble:rand(0,Math.PI*2), wobbleSpeed:rand(0.01,0.025), wobbleAmp:rand(15,45),
-    alpha:rand(0.3,0.75),
-    color:petalColors[Math.floor(Math.random()*petalColors.length)],
-    rot:rand(0,Math.PI*2), rotSpeed:rand(-0.02,0.02)
+  const type = Math.random() < 0.75 ? 'chick' : 'star';
+  const sIdx = Math.floor(Math.random() * chickSizes.length);
+  return {
+    type, sIdx,
+    size: type === 'chick' ? chickSizes[sIdx] : rand(1.2, 2.8),
+    x: rand(0, W),
+    y: -50 - Math.random() * H * 0.35,
+    speed: rand(0.6, 1.9),
+    wobble: rand(0, Math.PI*2),
+    wobbleSpeed: rand(0.008, 0.024),
+    wobbleAmp: rand(18, 52),
+    alpha: rand(0.3, 0.78),
+    rot: rand(0, Math.PI*2),
+    rotSpeed: rand(-0.018, 0.018)
   };
 }
 
-for(let i=0;i<45;i++){ const it=spawnItem(); it.y=rand(-H,H); items.push(it); }
+for(let i = 0; i < 55; i++){
+  const it = spawnItem(); it.y = rand(-H, H); items.push(it);
+}
 
 function animate(){
-  ctx.clearRect(0,0,W,H);
-  items.forEach((it,i)=>{
-    it.y+=it.speed; it.wobble+=it.wobbleSpeed; it.rot+=it.rotSpeed;
-    const dx=Math.sin(it.wobble)*it.wobbleAmp;
-    if(it.type==='petal') drawPetal(ctx,it.x+dx,it.y,it.size,it.color,it.alpha,it.rot);
-    else drawStar(ctx,it.x+dx,it.y,it.size,it.alpha);
-    if(it.y>H+40) items[i]=spawnItem();
+  ctx.clearRect(0, 0, W, H);
+  items.forEach((it, i) => {
+    it.y       += it.speed;
+    it.wobble  += it.wobbleSpeed;
+    it.rot     += it.rotSpeed;
+    const dx = Math.sin(it.wobble) * it.wobbleAmp;
+
+    ctx.save();
+    ctx.globalAlpha = it.alpha;
+    ctx.translate(it.x + dx, it.y);
+    ctx.rotate(it.rot);
+
+    if(it.type === 'chick'){
+      const oc = chickCanvases[it.sIdx];
+      ctx.drawImage(oc, -oc.width/2, -oc.height/2, oc.width, oc.height);
+    } else {
+      ctx.beginPath();
+      ctx.arc(0, 0, it.size, 0, Math.PI*2);
+      ctx.fillStyle = '#FDF6EE';
+      ctx.fill();
+    }
+
+    ctx.restore();
+    if(it.y > H + 60) items[i] = spawnItem();
   });
   requestAnimationFrame(animate);
 }
